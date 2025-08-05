@@ -58,5 +58,5 @@
 
 ## Architecture des données 
 
-![Schéma des données](../images/schema_donnees.png)
+![Schéma des données](../images/Architecture tables Projets Sanitoral.jpg)
 
