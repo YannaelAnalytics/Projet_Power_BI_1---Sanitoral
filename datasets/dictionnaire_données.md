@@ -5,7 +5,7 @@
 | Champ                     | Type   | Contrainte   | Description                                                                                                |
 |---------------------------|--------|--------------|------------------------------------------------------------------------------------------------------------|
 | `Project_ID`              | STRING |              | Identifiant unique pour chaque projet. Il y a plusieurs lignes pour chaque ID projet car plusieurs phases  |
-| `Phase`                   | STRING |              | La phase du projet                                                                                         |
+| `Phase`                   | STRING |              | Phase du projet                                                                                            |
 | `Start Date`              | DATE   |              | Date de départ d'un projet                                                                                 |
 | `Planned_Duration`        | FLOAT  |              | Nombre de jours prévus par phase. Estimation renseignée par l'équipe en charge                             |
 | `Planned_Cost`            | FLOAT  |              | Coûts prévus (en $) pour achever la phase de projet associée. Estimation renseignée par l'équipe en charge |
@@ -22,7 +22,7 @@
 | Champ                     | Type   | Contrainte   | Description                                                                                               |
 |---------------------------|--------|--------------|-----------------------------------------------------------------------------------------------------------|
 | `Project_ID`              | STRING |              | Identifiant unique pour chaque projet. Il y a plusieurs lignes pour chaque ID projet car plusieurs phases |
-| `Phase`                   | STRING |              | La phase du projet                                                                                        |
+| `Phase`                   | STRING |              | Phase du projet                                                                                           |
 | `Actual_Cost              | FLOAT  |              | Coût réel (en $) constaté de la phase du projet. Donnée resneignéee à la fin de la phase                  |
 
 ## Table : `Actual_Duration`
@@ -30,7 +30,7 @@
 | Champ                     | Type   | Contrainte   | Description                                                                                               |
 |---------------------------|--------|--------------|-----------------------------------------------------------------------------------------------------------|
 | `Project_ID`              | STRING |              | Identifiant unique pour chaque projet. Il y a plusieurs lignes pour chaque ID projet car plusieurs phases |
-| `Phase`                   | STRING |              | La phase du projet                                                                                        |
+| `Phase`                   | STRING |              | Phase du projet                                                                                           |
 | `Actual_Duration`         | FLOAT  |              | Nombre de jours nécessaires pour achever la phase du projet. Constaté à la fin de chaque phase            |
 
 ## Table : `Deliverables_status`
@@ -38,7 +38,7 @@
 | Champ                     | Type   | Contrainte   | Description                                                                                               |
 |---------------------------|--------|--------------|-----------------------------------------------------------------------------------------------------------|
 | `Project_ID`              | STRING |              | Identifiant unique pour chaque projet. Il y a plusieurs lignes pour chaque ID projet car plusieurs phases |
-| `Phase`                   | STRING |              | La phase du projet                                                                                        |
+| `Phase`                   | STRING |              | Phase du projet                                                                                           |
 | `Var_Deliverables`        | FLOAT  |              | Différence (en %) entre le nombre cible de livrables et le nombre réel livré pour chaque phase de projet. Donnée renseignée à des fins de suivi de performance. Elle permet de tracer la quantité d'éléments qui auraient dûs être livrés mais qui ne l'ont pas été       |
 
 ## Table : `Projects_Locations`
