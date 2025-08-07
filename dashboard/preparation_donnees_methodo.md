@@ -10,18 +10,38 @@
 
 -	Etant donné que la table ne comporte pas de clé primaire (le même Project_ID se retrouve autant de fois qu’il y’a de phases pour un projet), on duplique les colonnes « Project_ID » et « Phase ».
 
--	On crée ensuite une clé primaire en fusionnant ces 2 colonnes en une colonne « Projet + Phase ID ».
+-	Je crée ensuite une clé primaire en fusionnant ces 2 colonnes en une colonne « Projet + Phase ID ».
+  
+-	Je relie ma table `Actual Duration` à la table `Projects_plans` via ma clé primaire « Projet + Phase ID » nouvellement créée.
 
+- J'ai ensuite ajouté une colonne calculée `Planned Duration` qui va chercher la colonne `Planned Duration` de la table `Projects_plans` pour pouvoir calculer le taux d'écart entre la durée réelle et la durée prévisionnelle. J'utilise don la formule suivante :
+`Planned_Duration = RELATED(Projects_plans[Planned_Duration])`
 
+ 
+- Viennent maintenant les mesures :
+    - `Durée Prévue` : `= SUM(Actual_Duration[Planned_Duration])`
+    - `Durée Réelle` : `= SUM(Actual_Duration[Actual_Duration])`
+    - `Ecart Planned actual` : calcule l'écart en jours entre le prévisionnel et le réel --> `'Actual_Duration'[Durée Réelle]-'Actual_Duration'[Durée Prévue]`
+    - `Alerte_Depassement_Durée` : affiche un message d'alerte si l'écart seuil de 15% est constaté -->
+`= VAR DureePrevue = [Durée Prévue]
+   VAR DureeReelle = [Durée Réelle]
+   VAR Depassement = DureeReelle - DureePrevue
+   RETURN
+      IF(
+        Depassement >= DureePrevue * 0.15,
+        "Retard de plus de 15%",
+        "Durée Respectée"
+        )`
 
+-	Pour remplir l'objectif d’alerter au-delà d’un dépassement de plus de 15% de la durée en jours de chaque phase d'un projet, je crée ensuite une colonne calculée, `Taux de dépassement durée`, qui calcule le taux de dépassement à chaque ligne :
+`Taux de dépassement durée = (('Actual_Duration'[Actual_Duration]-'Actual_Duration'[Planned_Duration])/'Actual_Duration'[Planned_Duration])`
 
--	L’un des objectifs est d’alerter au-delà d’un dépassement de plus de 15%. J’ai donc créé une colonne qui calcule le taux de dépassement pour déterminer si chaque phase du projet dépasse la valeur seuil.
+-	Enfin, pour attribuer un statut en fonction du taux de dépassement (« OK » si en-dessous de 15% de dépassement et « En Retard » au-delà), on créé la colonne conditionnelle `Statut durée par phase`. La formule utilisée est la suivante :
+  `Statut durée par phase = IF('Actual_Duration'[Taux de dépassement durée] >= 0.15, "En Retard","OK")`
 
--	J’ai également créé une colonne conditionnelle qui attribue un statut en fonction du taux de dépassement : « OK » si en-dessous de 15% de dépassement et « En Retard » au-delà.
+-	Ces 2 dernières colonnes créées serviront à alimenter les graphiques de focus de projet en découpant par phase. Elles alimenteront aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
 
--	Les 2 étapes précédentes servent à alimenter les graphiques de focus de projet en découpant par phase et alimente aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
-
--	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Les mesures reprennent d’abord la [durée prévue], puis la [durée réelle]. Enfin la mesure qui définit l’alerte stipule que si [durée réelle] – [durée prévue] est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher « Retard de plus de 15% », sinon « Durée Respectée ».
+-	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Les mesures reprennent d’abord la [durée prévue] (`Durée Prévue = SUM(Actual_Duration[Planned_Duration])`), puis la [durée réelle] (`Durée Réelle = SUM(Actual_Duration[Actual_Duration])`). Enfin la mesure qui définit l’alerte se sert de la valeur retounée par la mesure qui calcule le nombre de jours d'écart de durée entre le prévisionnel et le réel (`Ecart PlannedActual_Duration'[Durée Réelle]-'Actual_Duration'[Durée Prévue]`est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher « Retard de plus de 15% », sinon « Durée Respectée ».
 
 -	Création de la mesure d’écarts de durée qui sert d’info-bulle aux graphiques : [durée réelle] – [durée prévue]
 
@@ -105,7 +125,7 @@
 
 ---
 
-## Table `Project_plans` :
+## Table `Projects_plans` :
 
 -	Promotion de la première ligne en en-tête.
 
@@ -134,6 +154,8 @@
 -	J’ai donc utilisé les données déjà entrées dans la table ‘Actual_Duration’, notamment la colonne ID Projet et ai calculé la moyenne du taux de dépassement de durée par projet.
 
 -	Enfin j’ai créé une colonne conditionnelle qui attribue un statut en fonction du taux de dépassement : « OK » si en-dessous de 15% de dépassement et « En Retard » au-delà.
+
+# Architecture Finale
 
 
 
