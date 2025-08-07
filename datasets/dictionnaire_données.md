@@ -14,6 +14,8 @@
 | `Planned_Duration`        | FLOAT  |              | Nombre de jours prévus par phase. Estimation renseignée par l'équipe en charge                             |
 | `Planned_Cost`            | FLOAT  |              | Coûts prévus (en $) pour achever la phase de projet associée. Estimation renseignée par l'équipe en charge |
 
+| Champ                     | Type   | Contrainte   | Description                                
+
 ## Table de Dimensions 1 : `Project type`
 
 | Champ                     | Type   | Contrainte   | Description                                                                                                |
