@@ -14,10 +14,12 @@
   
 -	Je relie ma table `Actual Duration` à la table `Projects_plans` via ma clé primaire « Projet + Phase ID » nouvellement créée.
 
+
 - J'ai ensuite ajouté une colonne calculée `Planned Duration` qui va chercher la colonne `Planned Duration` de la table `Projects_plans` pour pouvoir calculer le taux d'écart entre la durée réelle et la durée prévisionnelle. J'utilise donc la formule suivante : 
 ```dax
 Planned_Duration = RELATED(Projects_plans[Planned_Duration])
 ```
+
 
 -	Pour remplir l'objectif d’alerter au-delà d’un dépassement de plus de 15% de la durée en jours de chaque phase d'un projet, je crée ensuite une colonne calculée, `Taux de dépassement durée`, qui calcule le taux de dépassement à chaque ligne :
 ```dax
