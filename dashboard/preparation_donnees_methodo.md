@@ -17,22 +17,6 @@
 - J'ai ensuite ajouté une colonne calculée `Planned Duration` qui va chercher la colonne `Planned Duration` de la table `Projects_plans` pour pouvoir calculer le taux d'écart entre la durée réelle et la durée prévisionnelle. J'utilise don la formule suivante :
 `Planned_Duration = RELATED(Projects_plans[Planned_Duration])`
 
- 
-- Viennent maintenant les mesures :
-    - `Durée Prévue` : `= SUM(Actual_Duration[Planned_Duration])`
-    - `Durée Réelle` : `= SUM(Actual_Duration[Actual_Duration])`
-    - `Ecart Planned actual` : calcule l'écart en jours entre le prévisionnel et le réel --> `'Actual_Duration'[Durée Réelle]-'Actual_Duration'[Durée Prévue]`
-    - `Alerte_Depassement_Durée` : affiche un message d'alerte si l'écart seuil de 15% est constaté -->
-`= VAR DureePrevue = [Durée Prévue]
-   VAR DureeReelle = [Durée Réelle]
-   VAR Depassement = DureeReelle - DureePrevue
-   RETURN
-      IF(
-        Depassement >= DureePrevue * 0.15,
-        "Retard de plus de 15%",
-        "Durée Respectée"
-        )`
-
 -	Pour remplir l'objectif d’alerter au-delà d’un dépassement de plus de 15% de la durée en jours de chaque phase d'un projet, je crée ensuite une colonne calculée, `Taux de dépassement durée`, qui calcule le taux de dépassement à chaque ligne :
 `Taux de dépassement durée = (('Actual_Duration'[Actual_Duration]-'Actual_Duration'[Planned_Duration])/'Actual_Duration'[Planned_Duration])`
 
