@@ -35,11 +35,12 @@
   
 -	Enfin **la mesure qui affiche l’alerte** se sert de la valeur retounée par la mesure `Ecart Planned actual`. Si le nombre de jour affiché est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher **« Retard de plus de 15% »**, sinon **« Durée Respectée »**.
 
-`Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
+```dax
+Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
                             VAR DureeReelle = [Durée Réelle]
                             VAR Depassement = DureeReelle - DureePrevue
-                            RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")`
-
+                            RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")
+```
 ---
 
 ## Table `Actual_Costs` :
