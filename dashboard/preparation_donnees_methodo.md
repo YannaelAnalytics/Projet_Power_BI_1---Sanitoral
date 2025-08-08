@@ -1,6 +1,6 @@
 # Etapes de préparation des données par table sur PowerQuery
 
-## Table `Actual Duration` :
+## `Actual Duration` :
 
 -	Promotion de la première ligne en en-tête.
   
@@ -41,13 +41,19 @@
 
 -	Ces 2 dernières colonnes créées serviront à alimenter les graphiques de focus de projet en découpant par phase. Elles alimenteront aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
 
--	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Les mesures reprennent d’abord la [durée prévue] (`Durée Prévue = SUM(Actual_Duration[Planned_Duration])`), puis la [durée réelle] (`Durée Réelle = SUM(Actual_Duration[Actual_Duration])`). Enfin la mesure qui définit l’alerte se sert de la valeur retounée par la mesure qui calcule le nombre de jours d'écart de durée entre le prévisionnel et le réel (`Ecart PlannedActual_Duration'[Durée Réelle]-'Actual_Duration'[Durée Prévue]`est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher « Retard de plus de 15% », sinon « Durée Respectée ».
+-	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Celles-ci reprennent :
+    - la durée prévue --> `Durée Prévue = SUM(Actual_Duration[Planned_Duration])`
+    - la durée réelle --> `Durée Réelle = SUM(Actual_Duration[Actual_Duration])`
+    - l'écart planned VS actual (en jours) : `Ecart Planned actual = Actual_Duration'[Durée Réelle] - 'Actual_Duration'[Durée Prévue]`
+  
+-	Enfin **la mesure qui affiche l’alerte** se sert de la valeur retounée par la mesure `Ecart Planned actual`. Si le nombre de jour affiché est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher **« Retard de plus de 15% »**, sinon **« Durée Respectée »**.
 
--	Création de la mesure d’écarts de durée qui sert d’info-bulle aux graphiques : [durée réelle] – [durée prévue]
+`Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
+                            VAR DureeReelle = [Durée Réelle]
+                            VAR Depassement = DureeReelle - DureePrevue
+                            RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")`
 
-
-
-
+---
 
 ## Table `Actual_Costs` :
 
