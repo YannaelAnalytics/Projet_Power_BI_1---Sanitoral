@@ -14,24 +14,27 @@
   
 -	Je relie ma table `Actual Duration` à la table `Projects_plans` via ma clé primaire « Projet + Phase ID » nouvellement créée.
 
-- J'ai ensuite ajouté une colonne calculée `Planned Duration` qui va chercher la colonne `Planned Duration` de la table `Projects_plans` pour pouvoir calculer le taux d'écart entre la durée réelle et la durée prévisionnelle. J'utilise donc la formule suivante :
-  
-`Planned_Duration = RELATED(Projects_plans[Planned_Duration])`
+- J'ai ensuite ajouté une colonne calculée `Planned Duration` qui va chercher la colonne `Planned Duration` de la table `Projects_plans` pour pouvoir calculer le taux d'écart entre la durée réelle et la durée prévisionnelle. J'utilise donc la formule suivante : 
+```dax
+Planned_Duration = RELATED(Projects_plans[Planned_Duration])
+```
 
 -	Pour remplir l'objectif d’alerter au-delà d’un dépassement de plus de 15% de la durée en jours de chaque phase d'un projet, je crée ensuite une colonne calculée, `Taux de dépassement durée`, qui calcule le taux de dépassement à chaque ligne :
-  
-`Taux de dépassement durée = (('Actual_Duration'[Actual_Duration]-'Actual_Duration'[Planned_Duration])/'Actual_Duration'[Planned_Duration])`
+```dax
+Taux de dépassement durée = (('Actual_Duration'[Actual_Duration]-'Actual_Duration'[Planned_Duration])/'Actual_Duration'[Planned_Duration])`
+```
 
 -	Enfin, pour attribuer un statut en fonction du taux de dépassement (« OK » si en-dessous de 15% de dépassement et « En Retard » au-delà), on créé la colonne conditionnelle `Statut durée par phase`. La formule utilisée est la suivante :
-
-  `Statut durée par phase = IF('Actual_Duration'[Taux de dépassement durée] >= 0.15, "En Retard","OK")`
+```dax
+Statut durée par phase = IF('Actual_Duration'[Taux de dépassement durée] >= 0.15, "En Retard","OK")`
+```
 
 -	Ces 2 dernières colonnes créées serviront à alimenter les graphiques de focus de projet en découpant par phase. Elles alimenteront aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
 
 -	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Celles-ci reprennent :
-    - la durée prévue --> `Durée Prévue = SUM(Actual_Duration[Planned_Duration])`
-    - la durée réelle --> `Durée Réelle = SUM(Actual_Duration[Actual_Duration])`
-    - l'écart planned VS actual (en jours) : `Ecart Planned actual = Actual_Duration'[Durée Réelle] - 'Actual_Duration'[Durée Prévue]`
+    - la durée prévue --> ```dax Durée Prévue = SUM(Actual_Duration[Planned_Duration])```
+    - la durée réelle --> ```dax Durée Réelle = SUM(Actual_Duration[Actual_Duration])```
+    - l'écart planned VS actual (en jours) : ```dax Ecart Planned actual = Actual_Duration'[Durée Réelle] - 'Actual_Duration'[Durée Prévue]```
   
 -	Enfin **la mesure qui affiche l’alerte** se sert de la valeur retounée par la mesure `Ecart Planned actual`. Si le nombre de jour affiché est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher **« Retard de plus de 15% »**, sinon **« Durée Respectée »**.
 
