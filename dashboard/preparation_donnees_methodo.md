@@ -10,7 +10,7 @@
 
 - 🔄 **Transformation de types :**
 
-  - **Project_ID** → Nombre entier (meilleur affichage dans un segment de filtrage)
+  - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
 
   - **Phase** → Texte
 
@@ -18,11 +18,11 @@
 
 - 🔑 **Création d’une clé primaire :**
 
-   - Duplication des colonnes Project_ID et Phase
+   - Duplication des colonnes "Project_ID" et "Phase"
   
-   - Fusion pour créer Projet + Phase ID
+   - Fusion pour créer "Projet + Phase ID" au format Texte
 
-- 🔗 **Relation** : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
+- 🔗 **Relation** : liaison Actual_Duration ↔ Projects_plans via la clé "Projet + Phase ID".
 
 ---
 
@@ -107,17 +107,29 @@ Ces colonnes et mesures permettent :
 
 ---
 
-## Table `Actual_Costs` :
+## 📂 Table Actual_Costs
 
--	Promotion de la première ligne en en-tête.
+### 1️⃣ Préparation dans Power Query
+
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
+
+- 🗑️ **Nettoyage** → suppression des lignes vides.
+
+- 🔄 **Transformation de types :**
+
+  - **Project_ID** → Nombre entier (meilleur affichage dans un segment de filtrage)
+
+  - **Phase** → Texte
+
+  - **Actual_Cost** → Nombre Décimal
+
+- 🔑 **Création d’une clé primaire :**
+
+   - Duplication des colonnes "Project_ID" et "Phase"
   
--	Suppression des lignes vides
+   - Fusion pour créer "Projet + Phase ID" au format Texte
 
--	On crée ensuite la même clé primaire que dans la table précédente en fusionnant les 2 colonnes dupliquées en une colonne « Projet + Phase ID ».
-
--	On transforme ensuite le type de données en Texte pour « Projet + Phase ID » et « Phase », Nombre Entier pour « Project_ID » et Nombre Décimal pour « Actual_Cost ».
-
-
+- 🔗 **Relation** : liaison Actual_Costs ↔ Projects_plans via la clé "Projet + Phase ID".
 
 
 -	L’un des objectifs est d’alerter au-delà d’un dépassement de plus de 15%. J’ai donc créé une colonne qui calcule le taux de dépassement pour déterminer si chaque phase du projet dépasse la valeur seuil.
@@ -140,6 +152,8 @@ Ces colonnes et mesures permettent :
 -	On transforme ensuite le type de données en Texte.
 
 -	Suppression des lignes et colonnes vides.
+
+- 🔗 **Relation** : liaison `Country_Profiles` ↔ `Projects_plans` via la clé "Projet + Phase ID".
 
 ---
 
