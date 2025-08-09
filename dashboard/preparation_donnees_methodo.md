@@ -12,24 +12,24 @@
 
   - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
 
-  - **Phase** → Texte
+  - `Phase` → Texte
 
-  - **Actual_Duration** → Durée
+  - `Actual_Duration` → Durée
 
 - 🔑 **Création d’une clé primaire :**
 
-   - Duplication des colonnes "Project_ID" et "Phase"
+   - Duplication des colonnes `Project_ID` et `Phase`
   
-   - Fusion pour créer "Projet + Phase ID" au format Texte
+   - Fusion pour créer `Projet + Phase ID` au format Texte
 
-- 🔗 **Relation** : liaison Actual_Duration ↔ Projects_plans via la clé "Projet + Phase ID".
+- 🔗 **Relation** : liaison des tables `Actual_Duration` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
 ---
 
 ### 2️⃣ Colonnes calculées
 
 <details>
-<summary>📥 Récupération de la colonne "Planned_Duration" depuis la table "Projects_plans" </summary>
+<summary>📥 Récupération de la colonne `Planned_Duration` depuis la table `Projects_plans` </summary>
 
 ```dax
 Planned_Duration = RELATED(Projects_plans[Planned_Duration])
@@ -117,19 +117,19 @@ Ces colonnes et mesures permettent :
 
 - 🔄 **Transformation de types :**
 
-  - **Project_ID** → Nombre entier (meilleur affichage dans un segment de filtrage)
+  - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
 
-  - **Phase** → Texte
+  - `Phase` → Texte
 
-  - **Actual_Cost** → Nombre Décimal
+  - `Actual_Cost` → Nombre Décimal
 
 - 🔑 **Création d’une clé primaire :**
 
-   - Duplication des colonnes "Project_ID" et "Phase"
+   - Duplication des colonnes `Project_ID` et `Phase`
   
-   - Fusion pour créer "Projet + Phase ID" au format Texte
+   - Fusion pour créer `Projet + Phase ID` au format Texte
 
-- 🔗 **Relation** : liaison Actual_Costs ↔ Projects_plans via la clé "Projet + Phase ID".
+- 🔗 **Relation** : liaison des tables `Actual_Costs` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
 
 -	L’un des objectifs est d’alerter au-delà d’un dépassement de plus de 15%. J’ai donc créé une colonne qui calcule le taux de dépassement pour déterminer si chaque phase du projet dépasse la valeur seuil.
@@ -141,7 +141,6 @@ Ces colonnes et mesures permettent :
 -	Cependant, j’ai utilisé des mesures pour créer mon alerte de coûts. Les mesures reprennent d’abord le [Budget prévu], puis le [Budget réel]. Enfin la mesure qui définit l’alerte stipule que si [Budget réel] – [Budget prévu] est supérieur ou égal à [Budget prévu] x 0,15, alors doit s’afficher « Budget dépassé de plus de 15% », sinon « Budget Respecté ».
 
 -	Création de la mesure d’écart de coûts qui sert d’info-bulle aux graphiques : [Budget réel] – [Budget prévu].
-
 
 ---
 
