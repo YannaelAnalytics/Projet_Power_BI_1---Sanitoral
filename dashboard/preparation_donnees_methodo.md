@@ -1,3 +1,96 @@
+# 🛠️ Méthodologie de préparation des données – Power Query & DAX
+
+## 📂 Table Actual_Duration
+
+### 1️⃣ Préparation dans Power Query
+
+- 📌 Promotion d’en-tête → première ligne en en-tête.
+
+- 🗑️ Nettoyage → suppression des lignes vides.
+
+- 🔄 Transformation de types :
+
+    - Project_ID → Nombre entier (meilleur affichage dans un segment de filtrage)
+
+    - Phase → Texte
+
+    - Actual_Duration → Durée
+
+- 🔑 Création d’une clé primaire :
+
+    - Duplication des colonnes Project_ID et Phase
+
+    - Fusion pour créer Projet + Phase ID
+
+- 🔗 Relation : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
+
+### 2️⃣ Colonnes calculées
+
+<details>
+- <summary>📥 Récupération de la durée prévue </summary>
+
+```dax
+Planned_Duration = RELATED(Projects_plans[Planned_Duration])
+```
+</details>
+
+- 📏 Calcul du taux de dépassement
+
+dax
+Copier
+Modifier
+Taux de dépassement durée =
+(Actual_Duration[Actual_Duration] - Actual_Duration[Planned_Duration]) 
+/ Actual_Duration[Planned_Duration]
+🚦 Attribution du statut (OK / En Retard)
+
+dax
+Copier
+Modifier
+Statut durée par phase =
+IF(Actual_Duration[Taux de dépassement durée] >= 0.15, "En Retard", "OK")
+3️⃣ Mesures pour les visualisations
+📅 Durée prévue
+
+dax
+Copier
+Modifier
+Durée Prévue = SUM(Actual_Duration[Planned_Duration])
+📅 Durée réelle
+
+dax
+Copier
+Modifier
+Durée Réelle = SUM(Actual_Duration[Actual_Duration])
+📊 Écart (jours)
+
+dax
+Copier
+Modifier
+Ecart Planned actual =
+[Durée Réelle] - [Durée Prévue]
+⚠️ Alerte dépassement (+15%)
+
+dax
+Copier
+Modifier
+Alerte_Depassement_Durée =
+VAR DureePrevue = [Durée Prévue]
+VAR DureeReelle = [Durée Réelle]
+VAR Depassement = DureeReelle - DureePrevue
+RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")
+4️⃣ Utilité dans le dashboard
+Ces colonnes et mesures permettent :
+
+de découper par phase dans les graphiques de focus projet
+
+de classer les projets par taux de dépassement décroissant
+
+d’afficher automatiquement les alertes sur les projets en retard.
+
+
+
+
 # Etapes de préparation des données par table sur PowerQuery
 
 ## Table `Actual_Duration` :
