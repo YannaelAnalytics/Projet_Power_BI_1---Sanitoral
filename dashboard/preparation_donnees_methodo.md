@@ -4,11 +4,11 @@
 
 ### 1️⃣ Préparation dans Power Query
 
-- 📌 Promotion d’en-tête → première ligne en en-tête.
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
-- 🗑️ Nettoyage → suppression des lignes vides.
+- 🗑️ **Nettoyage** → suppression des lignes vides.
 
-- 🔄 Transformation de types :
+- 🔄 **Transformation de types :**
 
   - **Project_ID** → Nombre entier (meilleur affichage dans un segment de filtrage)
 
@@ -16,13 +16,13 @@
 
   - **Actual_Duration** → Durée
 
-- 🔑 Création d’une clé primaire :
+- 🔑 **Création d’une clé primaire :**
 
-   - **Duplication des colonnes Project_ID et Phase**
+   - Duplication des colonnes Project_ID et Phase
   
-   - **Fusion pour créer Projet + Phase ID**
+   - Fusion pour créer Projet + Phase ID
 
-- 🔗 Relation : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
+- 🔗 **Relation** : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
 
 ---
 
@@ -36,15 +36,16 @@ Planned_Duration = RELATED(Projects_plans[Planned_Duration])
 ```
 </details>
 
+<details>
 - <summary>📏 Calcul du taux de dépassement </summary>
 
-dax
-Copier
-Modifier
+```dax
 Taux de dépassement durée =
-(Actual_Duration[Actual_Duration] - Actual_Duration[Planned_Duration]) 
-/ Actual_Duration[Planned_Duration]
-🚦 Attribution du statut (OK / En Retard)
+(Actual_Duration[Actual_Duration] - Actual_Duration[Planned_Duration]) / Actual_Duration[Planned_Duration]
+```
+</details>
+
+- 🚦 Attribution du statut (OK / En Retard)
 
 dax
 Copier
