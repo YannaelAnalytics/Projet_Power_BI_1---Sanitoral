@@ -9,7 +9,7 @@
 - 🗑️ Nettoyage → suppression des lignes vides.
 
 </details>
-- <summary> 🔄 Transformation de types : </summary>
+<summary> 🔄 Transformation de types : </summary>
 
     - Project_ID → Nombre entier (meilleur affichage dans un segment de filtrage)
 
@@ -19,7 +19,7 @@
 </details>
 
 <details>
-- <summary>🔑 Création d’une clé primaire : </summary>
+<summary>🔑 Création d’une clé primaire : </summary>
 
     - Duplication des colonnes Project_ID et Phase
 
