@@ -29,7 +29,7 @@
 ### 2️⃣ Colonnes calculées
 
 <details>
-<summary>📥 Récupération de la durée prévue </summary>
+<summary>📥 Récupération de la colonne "Planned_Duration" depuis la table "Projects_plans" </summary>
 
 ```dax
 Planned_Duration = RELATED(Projects_plans[Planned_Duration])
