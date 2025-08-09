@@ -1,4 +1,4 @@
-    # 🛠️ Méthodologie de préparation des données – Power Query & DAX
+# 🛠️ Méthodologie de préparation des données – Power Query & DAX
 
 ## 📂 Table Actual_Duration
 
