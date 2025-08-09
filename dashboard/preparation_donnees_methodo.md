@@ -34,7 +34,7 @@ Planned_Duration = RELATED(Projects_plans[Planned_Duration])
 ```
 </details>
 
-- 📏 Calcul du taux de dépassement
+- <summary>📏 Calcul du taux de dépassement </summary>
 
 dax
 Copier
