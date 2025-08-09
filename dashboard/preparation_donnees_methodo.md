@@ -97,69 +97,13 @@ Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
 
 Ces colonnes et mesures permettent :
 
-- de découper par phase dans les graphiques de focus projet
+- de calculer le retard et de retourner un statut pour chaque phase dans tous les projets.
+
+- d'alimenter les graphiques de focus projet
 
 - de classer les projets par taux de dépassement décroissant
 
 - d’afficher automatiquement les alertes sur les projets en retard.
-
-
-
-
-# Etapes de préparation des données par table sur PowerQuery
-
-## Table `Actual_Duration` :
-
--	Promotion de la première ligne en en-tête.  
-
--	Suppression des lignes vides.  
-
--	Transformation du type de données : « Project_ID » en Nombre Entier (car meilleur agencement dans notre futur segment de filtrage de projets) , « Phase » en Texte et « Actual_Duration » en Durée.  
-
--	Etant donné que la table ne comporte pas de clé primaire (le même Project_ID se retrouve autant de fois qu’il y’a de phases pour un projet), on duplique les colonnes « Project_ID » et « Phase ».  
-
--	Je crée ensuite une clé primaire en fusionnant ces 2 colonnes en une colonne « Projet + Phase ID ».  
-
--	Je relie ma table `Actual Duration` à la table `Projects_plans` via ma clé primaire « Projet + Phase ID » nouvellement créée.  
-
-- J'ai ensuite ajouté une colonne calculée `Planned Duration` qui va chercher la colonne `Planned Duration` de la table `Projects_plans` pour pouvoir calculer le taux d'écart entre la durée réelle et la durée prévisionnelle. J'utilise donc la formule suivante : 
-```dax
-Planned_Duration = RELATED(Projects_plans[Planned_Duration])
-```  
-
--	Pour remplir l'objectif d’alerter au-delà d’un dépassement de plus de 15% de la durée en jours de chaque phase d'un projet, je crée ensuite une colonne calculée, `Taux de dépassement durée`, qui calcule le taux de dépassement à chaque ligne :
-```dax
-Taux de dépassement durée = (('Actual_Duration'[Actual_Duration]-'Actual_Duration'[Planned_Duration])/'Actual_Duration'[Planned_Duration])`
-```
-
--	Enfin, pour attribuer un statut en fonction du taux de dépassement (« OK » si en-dessous de 15% de dépassement et « En Retard » au-delà), on créé la colonne conditionnelle `Statut durée par phase`. La formule utilisée est la suivante :
-```dax
-Statut durée par phase = IF('Actual_Duration'[Taux de dépassement durée] >= 0.15, "En Retard","OK")`
-```
-
--	Ces 2 dernières colonnes créées serviront à alimenter les graphiques de focus de projet en découpant par phase. Elles alimenteront aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
-
--	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Celles-ci reprennent :
-    - la durée prévue :
-        ```dax
-        Durée Prévue = SUM(Actual_Duration[Planned_Duration])
-        ```
-    - la durée réelle :
-      ```dax
-      Durée Réelle = SUM(Actual_Duration[Actual_Duration])
-      ```
-    - l'écart planned VS actual (en jours) :
-      ```dax
-      Ecart Planned actual = Actual_Duration'[Durée Réelle] - 'Actual_Duration'[Durée Prévue]
-      ```
-
--	Enfin **la mesure qui affiche l’alerte** se sert de la valeur retounée par la mesure `Ecart Planned actual`. Si le nombre de jour affiché est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher **« Retard de plus de 15% »**, sinon **« Durée Respectée »**.
-```dax
-Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
-                            VAR DureeReelle = [Durée Réelle]
-                            VAR Depassement = DureeReelle - DureePrevue
-                            RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")
-```
 
 ---
 
