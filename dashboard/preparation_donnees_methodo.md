@@ -32,8 +32,8 @@ Statut durée par phase = IF('Actual_Duration'[Taux de dépassement durée] >= 0
 -	Ces 2 dernières colonnes créées serviront à alimenter les graphiques de focus de projet en découpant par phase. Elles alimenteront aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
 
 -	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Celles-ci reprennent :
-    - la durée prévue --> ```dax Durée Prévue = SUM(Actual_Duration[Planned_Duration])```
-    - la durée réelle --> ```dax Durée Réelle = SUM(Actual_Duration[Actual_Duration])```
+    - la durée prévue --> ```dax Durée Prévue = SUM(Actual_Duration[Planned_Duration]) ```
+    - la durée réelle --> ```dax Durée Réelle = SUM(Actual_Duration[Actual_Duration]) ```
     - l'écart planned VS actual (en jours) : ```dax Ecart Planned actual = Actual_Duration'[Durée Réelle] - 'Actual_Duration'[Durée Prévue]```
 
 -	Enfin **la mesure qui affiche l’alerte** se sert de la valeur retounée par la mesure `Ecart Planned actual`. Si le nombre de jour affiché est supérieur ou égal à [durée prévue] x 0,15, alors doit s’afficher **« Retard de plus de 15% »**, sinon **« Durée Respectée »**.
