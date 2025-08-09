@@ -29,7 +29,7 @@
 ### 2️⃣ Colonnes calculées
 
 <details>
-- <summary>📥 Récupération de la durée prévue </summary>
+<summary>📥 Récupération de la durée prévue </summary>
 
 ```dax
 Planned_Duration = RELATED(Projects_plans[Planned_Duration])
@@ -37,7 +37,7 @@ Planned_Duration = RELATED(Projects_plans[Planned_Duration])
 </details>
 
 <details>
-- <summary>📏 Calcul du taux de dépassement </summary>
+<summary>📏 Calcul du taux de dépassement </summary>
 
 ```dax
 Taux de dépassement durée =
@@ -45,51 +45,59 @@ Taux de dépassement durée =
 ```
 </details>
 
-- 🚦 Attribution du statut (OK / En Retard)
+<details>
+<summary>🚦 Attribution du statut (OK / En Retard) </summary>
+```dax
+Statut durée par phase = IF(Actual_Duration[Taux de dépassement durée] >= 0.15, "En Retard", "OK")
+```
+</details>
 
-dax
-Copier
-Modifier
-Statut durée par phase =
-IF(Actual_Duration[Taux de dépassement durée] >= 0.15, "En Retard", "OK")
-3️⃣ Mesures pour les visualisations
-📅 Durée prévue
+---
 
-dax
-Copier
-Modifier
+### 3️⃣ Mesures pour les visualisations
+
+<details>
+<summary>📅 Durée prévue </summary>
+```dax
 Durée Prévue = SUM(Actual_Duration[Planned_Duration])
-📅 Durée réelle
+```
+</details>
 
-dax
-Copier
-Modifier
+<details>
+<summary> 📅 Durée réelle </summary>
+```dax
 Durée Réelle = SUM(Actual_Duration[Actual_Duration])
-📊 Écart (jours)
+```
+</details>
 
-dax
-Copier
-Modifier
-Ecart Planned actual =
-[Durée Réelle] - [Durée Prévue]
-⚠️ Alerte dépassement (+15%)
+<details>
+<summary>📊 Écart (jours)</summary>
+```dax
+Ecart Planned actual = [Durée Réelle] - [Durée Prévue]
+```
+</details>
 
-dax
-Copier
-Modifier
-Alerte_Depassement_Durée =
-VAR DureePrevue = [Durée Prévue]
-VAR DureeReelle = [Durée Réelle]
-VAR Depassement = DureeReelle - DureePrevue
-RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")
-4️⃣ Utilité dans le dashboard
+<details>
+<summary>⚠️ Alerte dépassement (+15%)</summary>
+```dax
+Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
+                           VAR DureeReelle = [Durée Réelle]
+                           VAR Depassement = DureeReelle - DureePrevue
+                           RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")
+```
+</details>
+
+---
+
+### 4️⃣ Utilité dans le dashboard
+
 Ces colonnes et mesures permettent :
 
-de découper par phase dans les graphiques de focus projet
+- de découper par phase dans les graphiques de focus projet
 
-de classer les projets par taux de dépassement décroissant
+- de classer les projets par taux de dépassement décroissant
 
-d’afficher automatiquement les alertes sur les projets en retard.
+- d’afficher automatiquement les alertes sur les projets en retard.
 
 
 
