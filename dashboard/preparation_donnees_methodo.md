@@ -24,6 +24,8 @@
 
 - 🔗 Relation : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
 
+---
+
 ### 2️⃣ Colonnes calculées
 
 <details>
