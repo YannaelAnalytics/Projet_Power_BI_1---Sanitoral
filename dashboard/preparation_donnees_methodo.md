@@ -86,8 +86,7 @@ Ecart Planned actual = [Durée Réelle] - [Durée Prévue]
 ```dax
 Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
                            VAR DureeReelle = [Durée Réelle]
-                           VAR Depassement = DureeReelle - DureePrevue
-                           RETURN IF(Depassement >= DureePrevue * 0.15, "Retard de plus de 15%", "Durée Respectée")
+                           RETURN IF(DureeReelle >= DureePrevue * 1.15, "Retard de plus de 15%", "Durée Respectée")
 ```
 </details>
 
@@ -193,8 +192,7 @@ Ecart Planned actual Costs = [Budget Réel] - [Budget Prévu]
 ```dax
 Alerte_Depassement_coûts = VAR BudgetPrevu = [Budget Prévu]
                            VAR BudgetReel = [Budget Réel]
-                           VAR Depassement = BudgetReel - BudgetPrevu
-                           RETURN IF(Depassement >= BudgetPrevu * 0.15, "Budget dépassé de plus de 15%", "Budget Respecté")
+                           RETURN IF(BudgetReel >= BudgetPrevu * 1.15, "Budget dépassé de plus de 15%", "Budget Respecté")
 ```
 </details>
 
