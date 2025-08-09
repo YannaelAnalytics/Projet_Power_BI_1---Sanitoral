@@ -1,6 +1,6 @@
 # 🛠️ Méthodologie de préparation des données – Power Query & DAX
 
-## 📂 Table Actual_Duration
+## 📂 Table `Actual_Duration`
 
 ### 1️⃣ Préparation dans Power Query
 
@@ -106,7 +106,7 @@ Ces colonnes et mesures permettent :
 
 ---
 
-## 📂 Table Actual_Costs
+## 📂 Table `Actual_Costs`
 
 ### 1️⃣ Préparation dans Power Query
 
@@ -212,15 +212,23 @@ Ces colonnes et mesures permettent :
 
 ---
 
-## Table `Country_Profiles` :
+## 📂 Table `Country_Profiles`
 
--	Promotion de la première ligne en en-tête.
+### 1️⃣ Préparation dans Power Query
 
--	On transforme ensuite le type de données en Texte.
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
--	Suppression des lignes et colonnes vides.
+- 🗑️ **Nettoyage** → suppression des colonnes et des lignes vides.
 
-- 🔗 **Relation** : liaison `Country_Profiles` ↔ `Projects_plans` via la clé "Projet + Phase ID".
+- 🔄 **Transformation de types :**
+
+  - `Country` → Texte
+
+  - `Region` → Texte
+
+  - `Type` → Texte
+
+- 🔗 **Relation** : liaison `Country_Profiles` ↔ `Projects_Locations` via la clé `Country`.
 
 ---
 
