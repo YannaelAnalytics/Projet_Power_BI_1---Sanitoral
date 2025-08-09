@@ -99,11 +99,11 @@ Ces colonnes et mesures permettent :
 
 - de calculer le retard et de retourner un statut pour chaque phase dans tous les projets.
 
-- d'alimenter les graphiques de focus projet
+- d'alimenter les graphiques de focus projet.
 
-- de classer les projets par taux de dépassement décroissant
+- de classer les projets par taux de dépassement décroissant.
 
-- d’afficher automatiquement les alertes sur les projets en retard.
+- d’afficher automatiquement les alertes sur les projets trop en retard (+15%).
 
 ---
 
@@ -131,16 +131,86 @@ Ces colonnes et mesures permettent :
 
 - 🔗 **Relation** : liaison des tables `Actual_Costs` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
+---
 
--	L’un des objectifs est d’alerter au-delà d’un dépassement de plus de 15%. J’ai donc créé une colonne qui calcule le taux de dépassement pour déterminer si chaque phase du projet dépasse la valeur seuil.
+### 2️⃣ Colonnes calculées
 
--	J’ai également créé une colonne conditionnelle qui attribue un statut en fonction du taux de dépassement : « OK » si en-dessous de 15% de dépassement et « Dépassé » au-delà.
+<details>
+<summary>📥 Récupération de la colonne `Planned_Cost` depuis la table `Projects_plans` </summary>
 
--	Les 2 étapes précédentes servent à alimenter les graphiques de focus de projet en découpant par phase et alimente aussi les classements des projets par taux de dépassement décroissant (les mesures ne me permettent pas d’alimenter correctement les graphiques).
+```dax
+Planned_Cost = RELATED(Projects_plans[Planned_Cost])
+```
+</details>
 
--	Cependant, j’ai utilisé des mesures pour créer mon alerte de coûts. Les mesures reprennent d’abord le [Budget prévu], puis le [Budget réel]. Enfin la mesure qui définit l’alerte stipule que si [Budget réel] – [Budget prévu] est supérieur ou égal à [Budget prévu] x 0,15, alors doit s’afficher « Budget dépassé de plus de 15% », sinon « Budget Respecté ».
+<details>
+<summary>📏 Calcul du taux de dépassement </summary>
+  
+```dax
+Taux de dépassement coûts = ('Actual_Costs'[Actual_Cost] - 'Actual_Costs'[Planned_Cost]) / 'Actual_Costs'[Planned_Cost]
+```
+</details>
 
--	Création de la mesure d’écart de coûts qui sert d’info-bulle aux graphiques : [Budget réel] – [Budget prévu].
+<details>
+<summary>🚦 Attribution du statut (OK / Dépassé) </summary>
+  
+```dax
+Statut coûts par phase = IF('Actual_Costs'[Taux de dépassement coûts] >= 0.15, "Dépassé", "OK")
+```
+</details>
+
+---
+
+### 3️⃣ Mesures pour les visualisations
+
+<details>
+<summary>📅 Budget prévu </summary>
+  
+```dax
+Budget Prévu = SUM(Actual_Costs[Planned_Cost])
+```
+</details>
+
+<details>
+<summary> 📅 Budget réel </summary>
+  
+```dax
+Budget Réel = SUM(Actual_Costs[Actual_Cost])
+```
+</details>
+
+<details>
+<summary>📊 Écart ($)</summary>
+  
+```dax
+Ecart Planned actual Costs = [Budget Réel] - [Budget Prévu]
+```
+</details>
+
+<details>
+<summary>⚠️ Alerte dépassement (+15%)</summary>
+  
+```dax
+Alerte_Depassement_coûts = VAR BudgetPrevu = [Budget Prévu]
+                           VAR BudgetReel = [Budget Réel]
+                           VAR Depassement = BudgetReel - BudgetPrevu
+                           RETURN IF(Depassement >= BudgetPrevu * 0.15, "Budget dépassé de plus de 15%", "Budget Respecté")
+```
+</details>
+
+---
+
+### 4️⃣ Utilité dans le dashboard
+
+Ces colonnes et mesures permettent :
+
+- de calculer le dépassement de budget et de retourner un statut pour chaque phase dans tous les projets.
+
+- d'alimenter les graphiques de focus projet.
+
+- de classer les projets par taux de dépassement décroissant.
+
+- d’afficher automatiquement les alertes sur les projets avec un budget qui dépasse les limites autorisées (+15%).
 
 ---
 
