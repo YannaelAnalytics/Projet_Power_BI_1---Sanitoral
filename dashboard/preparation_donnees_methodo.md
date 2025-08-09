@@ -7,14 +7,15 @@
 - 📌 Promotion d’en-tête → première ligne en en-tête.
 
 - 🗑️ Nettoyage → suppression des lignes vides.
-
-- 🔄 Transformation de types :
+<details>
+- <summary>🔄 Transformation de types :</summary>
 
   - **Project_ID** → Nombre entier (meilleur affichage dans un segment de filtrage)
 
   - **Phase** → Texte
 
   - **Actual_Duration** → Durée
+</details>
 
 - 🔑 Création d’une clé primaire :
 
