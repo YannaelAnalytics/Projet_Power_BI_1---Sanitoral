@@ -38,10 +38,8 @@ Planned_Duration = RELATED(Projects_plans[Planned_Duration])
 
 <details>
 <summary>📏 Calcul du taux de dépassement </summary>
-
 ```dax
-Taux de dépassement durée =
-(Actual_Duration[Actual_Duration] - Actual_Duration[Planned_Duration]) / Actual_Duration[Planned_Duration]
+Taux de dépassement durée = (Actual_Duration[Actual_Duration] - Actual_Duration[Planned_Duration]) / Actual_Duration[Planned_Duration]
 ```
 </details>
 
