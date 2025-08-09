@@ -8,15 +8,13 @@
 
 - 🗑️ Nettoyage → suppression des lignes vides.
 
-</details>
 - <summary> 🔄 Transformation de types : </summary>
 
  - **Project_ID** → Nombre entier (meilleur affichage dans un segment de filtrage)
 
  - **Phase** → Texte
 
-- **Actual_Duration** → Durée    
-</details>
+- **Actual_Duration** → Durée
 
 <details>
 - <summary>🔑 Création d’une clé primaire : </summary>
