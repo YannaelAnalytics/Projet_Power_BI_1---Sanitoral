@@ -258,21 +258,67 @@ Ces colonnes et mesures permettent :
 
 ---
 
-## Table `Deliverables_status` :
+### 2️⃣ Colonnes calculées
 
--	Promotion de la première ligne en en-tête.
+<details>
+<summary>🚦 Attribution du statut (OK / Projet Inachevé)</summary>
 
--	Suppression des lignes vides.
+```dax
+Statut Ecart Livrables = IF('Deliverables_status'[Var_Deliverables] <= -0.15, "Projet Inachevé","OK")
+```
+</details>
 
--	On crée ensuite la même clé primaire que dans la table précédente en fusionnant les 2 colonnes dupliquées en une colonne « Projet + Phase ID ».
+---
+
+### 3️⃣ Mesures pour les visualisations
+
+<details>
+<summary>⚠️ Alerte dépassement (-15%) </summary>
   
--	On transforme ensuite le type de données en Texte pour « Projet + Phase ID » et « Phase », Nombre Entier pour « Project_ID » et Nombre Décimal pour « Var_Deliverables ».
+```dax
+Alerte_Ecart_Livrables = IF(AVERAGE(Deliverables_status[Var_Deliverables]) <= -0.15, "Plus de 15% de livrables manquants", "Projet Complété")
+```
+</details>
 
+---
 
+### 4️⃣ Utilité dans le dashboard
 
+Ces colonnes et mesures permettent :
 
+- de calculer le taux de livrables manquants et de retourner un statut pour chaque phase dans tous les projets.
 
--	J’ai utilisé une mesure pour créer mon alerte de taux de livrables manquants. La mesure calcule si la moyenne du taux de livrable manquants pour un projet est inférieure ou égale à -15%, alors doit s’afficher « Plus de 15% de livrables manquants », sinon « Projet Complété ».
+- d'alimenter les graphiques de focus projet.
+
+- de classer les phases qui ont le plus de livrables manquants.
+
+- d’afficher automatiquement les alertes sur les projets qui ont des manquements critiques dans les livrables (-15%).
+
+---
+
+## 📂 Table `Projects_Locations`
+
+### 1️⃣ Préparation dans Power Query
+
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
+
+- 🗑️ **Nettoyage** → suppression des lignes vides.
+
+- 🔄 **Transformation de types :**
+
+  - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
+
+  - `Phase` → Texte
+ 
+  - `Var_Deliverables` → Nombre Décimal
+
+- 🔑 **Création d’une clé primaire :**
+
+   - Duplication des colonnes `Project_ID` et `Phase`
+  
+   - Fusion pour créer `Projet + Phase ID` au format Texte
+
+- 🔗 **Relation** : liaison `Deliverables_status` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
 ---
 
