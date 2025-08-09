@@ -1,6 +1,6 @@
 # Etapes de préparation des données par table sur PowerQuery
 
-## `Actual Duration` :
+## `Actual_Duration` :
 
 -	Promotion de la première ligne en en-tête.  
 
