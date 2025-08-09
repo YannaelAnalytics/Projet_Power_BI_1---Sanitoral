@@ -24,7 +24,6 @@
 
 - 🔗 **Relation** : liaison des tables `Actual_Duration` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
----
 
 ### 2️⃣ Colonnes calculées
 
@@ -51,8 +50,6 @@ Taux de dépassement durée = (Actual_Duration[Actual_Duration] - Actual_Duratio
 Statut durée par phase = IF(Actual_Duration[Taux de dépassement durée] >= 0.15, "En Retard", "OK")
 ```
 </details>
-
----
 
 ### 3️⃣ Mesures pour les visualisations
 
@@ -89,8 +86,6 @@ Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
                            RETURN IF(DureeReelle >= DureePrevue * 1.15, "Retard de plus de 15%", "Durée Respectée")
 ```
 </details>
-
----
 
 ### 4️⃣ Utilité dans le dashboard
 
