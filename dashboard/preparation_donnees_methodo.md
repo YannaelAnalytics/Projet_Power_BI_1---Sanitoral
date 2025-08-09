@@ -17,7 +17,7 @@
 - **Actual_Duration** → Durée
 
 <details>
-- <summary>🔑 Création d’une clé primaire : </summary>
+- 🔑 Création d’une clé primaire :
 
 - **Duplication des colonnes Project_ID et Phase**
 
