@@ -33,9 +33,9 @@ Statut durée par phase = IF('Actual_Duration'[Taux de dépassement durée] >= 0
 
 -	Cependant, j’ai utilisé des mesures pour créer mon alerte de durée. Celles-ci reprennent :
     - la durée prévue :
-    ```dax
-    Durée Prévue = SUM(Actual_Duration[Planned_Duration])
-    ```
+        ```dax
+        Durée Prévue = SUM(Actual_Duration[Planned_Duration])
+        ```
     - la durée réelle :
       ```dax
       Durée Réelle = SUM(Actual_Duration[Actual_Duration])
