@@ -8,19 +8,23 @@
 
 - 🗑️ Nettoyage → suppression des lignes vides.
 
-- 🔄 Transformation de types :
+</details>
+- <summary> 🔄 Transformation de types : </summary>
 
     - Project_ID → Nombre entier (meilleur affichage dans un segment de filtrage)
 
     - Phase → Texte
 
     - Actual_Duration → Durée
+</details>
 
-- 🔑 Création d’une clé primaire :
+<details>
+- <summary>🔑 Création d’une clé primaire : </summary>
 
     - Duplication des colonnes Project_ID et Phase
 
     - Fusion pour créer Projet + Phase ID
+</details>
 
 - 🔗 Relation : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
 
