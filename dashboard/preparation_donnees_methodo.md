@@ -18,9 +18,9 @@
 
 - 🔑 Création d’une clé primaire :
 
- - **Duplication des colonnes Project_ID et Phase**
-
- - **Fusion pour créer Projet + Phase ID**
+   - **Duplication des colonnes Project_ID et Phase**
+  
+   - **Fusion pour créer Projet + Phase ID**
 
 - 🔗 Relation : liaison Actual_Duration ↔ Projects_plans via la clé Projet + Phase ID.
 
