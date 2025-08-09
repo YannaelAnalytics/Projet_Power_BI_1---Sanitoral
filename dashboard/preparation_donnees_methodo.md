@@ -232,6 +232,32 @@ Ces colonnes et mesures permettent :
 
 ---
 
+## 📂 Table `Deliverables_status`
+
+### 1️⃣ Préparation dans Power Query
+
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
+
+- 🗑️ **Nettoyage** → suppression des lignes vides.
+
+- 🔄 **Transformation de types :**
+
+  - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
+
+  - `Phase` → Texte
+ 
+  - `Var_Deliverables` → Nombre Décimal
+
+- 🔑 **Création d’une clé primaire :**
+
+   - Duplication des colonnes `Project_ID` et `Phase`
+  
+   - Fusion pour créer `Projet + Phase ID` au format Texte
+
+- 🔗 **Relation** : liaison `Deliverables_status` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
+
+---
+
 ## Table `Deliverables_status` :
 
 -	Promotion de la première ligne en en-tête.
