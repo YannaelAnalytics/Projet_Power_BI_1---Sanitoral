@@ -487,11 +487,6 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 ---
 
-# Architecture Finale
+# Schéma en étoile final
 
-
-
-
-
-
-
+![Schéma des données](../images/architecture_données.jpg)
