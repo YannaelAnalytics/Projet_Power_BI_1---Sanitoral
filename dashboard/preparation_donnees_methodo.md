@@ -334,14 +334,21 @@ Ces colonnes et mesures permettent :
 
 ---	
 
-## Table `Project type` :
+## 📂 Table `Project type`
 
--	Promotion de la première ligne en en-tête.
+### 1️⃣ Préparation dans Power Query
 
--	Suppression des lignes vides.
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
--	Transformation du type de données : « Project_ID » en Nombre Entier et « Project Type » en Texte.
+- 🗑️ **Nettoyage** → suppression des lignes vides.
 
+- 🔄 **Transformation de types :**
+
+  - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
+
+  - `Project Type` → Texte
+
+- 🔗 **Relation** : liaison `Project type` ↔ `Projects_plans` via la clé `Project_ID`.
 ---
 
 ## Table `Projects_plans` :
