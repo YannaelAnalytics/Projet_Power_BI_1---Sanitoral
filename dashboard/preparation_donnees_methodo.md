@@ -25,6 +25,8 @@
    - Duplication des colonnes `Project_ID` et `Phase`.
   
    - Fusion pour créer `Projet + Phase ID` au format Texte.
+ 
+---
 
 ### 🧩 Liaison au modèle 
 
