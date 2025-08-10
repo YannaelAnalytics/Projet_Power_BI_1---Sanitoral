@@ -399,7 +399,7 @@ Ces colonnes et mesures permettent :
 
 ---
 
-## ➕📋 Création de la table `PROJETS GLOBAL COUTS`
+## ➕📂 Création de la table `PROJETS GLOBAL COUTS`
 
 Je voulais créer une page dans le rapport que les directeurs pourraient consulter pour avoir accès aux KPIs de l’ensemble des projets pour avoir une vision générale. Il n'y a donc pas de filtrage possible de l'ID Projet ou de la Phase. Les seules filtrages permis sont via le Type de projet (Marketing/IT) et la Localisation (Région + Pays).
 
@@ -443,13 +443,47 @@ Statut coûts par projet = IF('PROJETS GLOBAL COUTS'[Moyenne_Taux_Depassement] >
 
 ---
 
-## Création de la table `PROJETS GLOBAL DUREE`
+## ➕📂 Création de la table `PROJETS GLOBAL DUREE`
 
--	Dans la même idée que pour la table précédemment expliquée, j’ai fait de même pour la durée des projets.
+Je voulais créer une page dans le rapport que les directeurs pourraient consulter pour avoir accès aux KPIs de l’ensemble des projets pour avoir une vision générale. Il n'y a donc pas de filtrage possible de l'ID Projet ou de la Phase. Les seules filtrages permis sont via le Type de projet (Marketing/IT) et la Localisation (Région + Pays).
 
--	J’ai donc utilisé les données déjà entrées dans la table ‘Actual_Duration’, notamment la colonne ID Projet et ai calculé la moyenne du taux de dépassement de durée par projet.
+### 🛠️ Conception de la requête de création de table
 
--	Enfin j’ai créé une colonne conditionnelle qui attribue un statut en fonction du taux de dépassement : « OK » si en-dessous de 15% de dépassement et « En Retard » au-delà.
+-	Comme pour la table précédemment créée, on veut une table où `Project_ID` serait une clé primaire, sans les phases.
+
+-	J’ai utilisé ici les données de la colonne `Project_ID` de la table `Actual_Duration`, et j'ai calculé la moyenne du taux de dépassement de durée par projet.
+
+```dax
+PROJETS GLOBAL DUREE = SELECTCOLUMNS(
+                          SUMMARIZE(
+                              'Actual_Duration',                                                                        // Table à utiliser
+                              'Actual_Duration'[Project_ID],                                                            // Colonne à grouper
+                              "Moyenne_Taux_Depassement_Retard", AVERAGE('Actual_Duration'[Taux de dépassement durée])  // Calcul de la moyenne
+                                   ),
+                          // Colonnes à garder dans le résultat final
+                              "ID_PROJET", 'Actual_Duration'[Project_ID],                    // Sélection de la colonne ID_PROJET
+                              "Moyenne_Taux_Depassement", [Moyenne_Taux_Depassement_Retard]  // Sélection de la colonne de moyenne
+                                    )
+```
+---
+
+### ✏️ Colonne calculée
+
+<details>
+<summary>🚦 Attribution du statut (OK / En Retard) </summary>
+  
+```dax
+Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*100 > 15, "En Retard","OK")
+```
+</details> 
+
+---
+
+### 🧩 Liaison au modèle 
+
+- 🔗 **Relation** : liaison `PROJETS GLOBAL DUREE` ↔ `Projects_plans` via la clé `Project_ID`.
+
+---
 
 # Architecture Finale
 
