@@ -1,8 +1,40 @@
-# 🛠️ Méthodologie de préparation des données – Power Query & DAX
+# 🧭 Méthodologie de préparation des données – Power Query & DAX
+
+## 📂 Table `Projects_plans`
+
+### 🛠️ Préparation dans Power Query
+
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
+
+- 🗑️ **Nettoyage** → suppression des lignes vides.
+
+- 🔄 **Transformation de types :**
+
+  - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
+
+  - `Phase` → Texte
+ 
+  - `Planned_Cost` → Nombre Décimal
+ 
+  - `Start Date` → Date
+ 
+  - Planned_Duration → Durée 
+
+- 🔑 **Création d’une clé primaire :**
+
+   - Duplication des colonnes `Project_ID` et `Phase`.
+  
+   - Fusion pour créer `Projet + Phase ID` au format Texte.
+
+### 🧩 Liaison au modèle 
+
+- 🔗 **Relation** : liaison `Deliverables_status` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
+
+---
 
 ## 📂 Table `Actual_Duration`
 
-### 1️⃣ Préparation dans Power Query
+### 🛠️ Préparation dans Power Query & relations
 
 - 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
@@ -22,11 +54,9 @@
   
    - Fusion pour créer `Projet + Phase ID` au format Texte
 
-- 🔗 **Relation** : liaison des tables `Actual_Duration` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
-
 ---
 
-### 2️⃣ Colonnes calculées
+### ✏️ Colonnes calculées
 
 <details>
 <summary>📥 Récupération de la colonne `Planned_Duration` depuis la table `Projects_plans` </summary>
@@ -54,7 +84,7 @@ Statut durée par phase = IF(Actual_Duration[Taux de dépassement durée] >= 0.1
 
 ---
 
-### 3️⃣ Mesures pour les visualisations
+### 🧮 Mesures pour les visualisations
 
 <details>
 <summary>📅 Durée prévue </summary>
@@ -92,7 +122,14 @@ Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
 
 ---
 
-### 4️⃣ Utilité dans le dashboard
+### 🧩 Liaison au modèle 
+
+
+- 🔗 **Relation** : liaison des tables `Actual_Duration` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
+
+---
+
+### 🎯 Utilité dans le dashboard
 
 Ces colonnes et mesures permettent :
 
@@ -108,7 +145,7 @@ Ces colonnes et mesures permettent :
 
 ## 📂 Table `Actual_Costs`
 
-### 1️⃣ Préparation dans Power Query
+### 🛠️ Préparation dans Power Query & relations
 
 - 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
@@ -128,11 +165,9 @@ Ces colonnes et mesures permettent :
   
    - Fusion pour créer `Projet + Phase ID` au format Texte
 
-- 🔗 **Relation** : liaison des tables `Actual_Costs` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
-
 ---
 
-### 2️⃣ Colonnes calculées
+### ✏️ Colonnes calculées
 
 <details>
 <summary>📥 Récupération de la colonne `Planned_Cost` depuis la table `Projects_plans` </summary>
@@ -160,7 +195,7 @@ Statut coûts par phase = IF('Actual_Costs'[Taux de dépassement coûts] >= 0.15
 
 ---
 
-### 3️⃣ Mesures pour les visualisations
+### 🧮 Mesures pour les visualisations
 
 <details>
 <summary>📅 Budget prévu </summary>
@@ -198,7 +233,13 @@ Alerte_Depassement_coûts = VAR BudgetPrevu = [Budget Prévu]
 
 ---
 
-### 4️⃣ Utilité dans le dashboard
+### 🧩 Liaison au modèle 
+
+- 🔗 **Relation** : liaison des tables `Actual_Costs` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
+
+---
+
+### 🎯 Utilité dans le dashboard
 
 Ces colonnes et mesures permettent :
 
@@ -212,29 +253,9 @@ Ces colonnes et mesures permettent :
 
 ---
 
-## 📂 Table `Country_Profiles`
-
-### 1️⃣ Préparation dans Power Query
-
-- 📌 **Promotion d’en-tête** → première ligne en en-tête.
-
-- 🗑️ **Nettoyage** → suppression des colonnes et des lignes vides.
-
-- 🔄 **Transformation de types :**
-
-  - `Country` → Texte
-
-  - `Region` → Texte
-
-  - `Type` → Texte
-
-- 🔗 **Relation** : liaison `Country_Profiles` ↔ `Projects_Locations` via la clé `Country`.
-
----
-
 ## 📂 Table `Deliverables_status`
 
-### 1️⃣ Préparation dans Power Query
+### 🛠️ Préparation dans Power Query & relations
 
 - 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
@@ -254,11 +275,9 @@ Ces colonnes et mesures permettent :
   
    - Fusion pour créer `Projet + Phase ID` au format Texte
 
-- 🔗 **Relation** : liaison `Deliverables_status` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
-
 ---
 
-### 2️⃣ Colonnes calculées
+### ✏️ Colonnes calculées
 
 <details>
 <summary>🚦 Attribution du statut (OK / Projet Inachevé)</summary>
@@ -270,7 +289,7 @@ Statut Ecart Livrables = IF('Deliverables_status'[Var_Deliverables] <= -0.15, "P
 
 ---
 
-### 3️⃣ Mesures pour les visualisations
+### 🧮 Mesures pour les visualisations
 
 <details>
 <summary>⚠️ Alerte dépassement (-15%) </summary>
@@ -282,7 +301,13 @@ Alerte_Ecart_Livrables = IF(AVERAGE(Deliverables_status[Var_Deliverables]) <= -0
 
 ---
 
-### 4️⃣ Utilité dans le dashboard
+### 🧩 Liaison au modèle 
+
+- 🔗 **Relation** : liaison `Deliverables_status` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
+
+---
+
+### 🎯 Utilité dans le dashboard
 
 Ces colonnes et mesures permettent :
 
@@ -296,47 +321,65 @@ Ces colonnes et mesures permettent :
 
 ---
 
+## 📂 Table `Country_Profiles`
+
+### 🛠️ Préparation dans Power Query & relations
+
+- 📌 **Promotion d’en-tête** → première ligne en en-tête.
+
+- 🗑️ **Nettoyage** → suppression des colonnes et des lignes vides.
+
+- 🔄 **Transformation de types :**
+
+  - `Country` → Texte
+
+  - `Region` → Texte
+
+  - `Type` → Texte
+
+---
+
+### 🧩 Liaison au modèle 
+
+- 🔗 **Relation** : liaison `Country_Profiles` ↔ `Projects_Locations` via la clé `Country`.
+
+---
+
 ## 📂 Table `Projects_Locations`
 
-### 1️⃣ Préparation dans Power Query
+### 🛠️ Préparation dans Power Query & relations
 
 - 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
 - 🗑️ **Nettoyage** → suppression des lignes vides.
 
+- 🪢 **Fusion de requêtes externe gauche :**
+
+   - On fusionne les tables `Projects_Locations` et `Country_Profiles` sur la base du champ `Country`.
+  
+   - On peut ainsi associer à chaque `Project_ID` les informations géographiques associées dans une seule et même table.
+
 - 🔄 **Transformation de types :**
 
   - `Project_ID` → Nombre entier (meilleur affichage dans un segment de filtrage)
 
-  - `Phase` → Texte
+  - `Country` → Texte
  
-  - `Var_Deliverables` → Nombre Décimal
-
-- 🔑 **Création d’une clé primaire :**
-
-   - Duplication des colonnes `Project_ID` et `Phase`
-  
-   - Fusion pour créer `Projet + Phase ID` au format Texte
-
-- 🔗 **Relation** : liaison `Projects_Locations` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
+  - `Region` → Texte
+ 
+  - `Type` → Texte
 
 ---
 
-## Table `Projects_Locations` :
+### 🧩 Liaison au modèle 
 
--	Promotion de la première ligne en en-tête.
-
--	Suppression des lignes vides.
-
--	Fusion Externe Gauche sur la base du champ « Country » avec la Table « Country_Profiles » pour rassembler en une seule tables toutes les données géographiques, donc rajouter à notre tables « Projects_Locations » la « Région » et le « Type » de pays.
-
--	Transformation du type de données : « Project_ID » en Nombre Entier, puis « Country », « Region » et « Type » en Texte.
+- 🔗 **Relation** : liaison `Projects_Locations` ↔ `Projects_plans` via la clé `Projet_ID`.
 
 ---	
 
 ## 📂 Table `Project type`
 
-### 1️⃣ Préparation dans Power Query
+### 🛠️ Préparation dans Power Query & relations
 
 - 📌 **Promotion d’en-tête** → première ligne en en-tête.
 
@@ -348,30 +391,57 @@ Ces colonnes et mesures permettent :
 
   - `Project Type` → Texte
 
+---
+
+### 🧩 Liaison au modèle 
+
 - 🔗 **Relation** : liaison `Project type` ↔ `Projects_plans` via la clé `Project_ID`.
----
-
-## Table `Projects_plans` :
-
--	Promotion de la première ligne en en-tête.
-
--	Etant donné que la table ne comporte pas de clé primaire (le même Project_ID se retrouve autant de fois qu’il y’a de phases pour un projet), on duplique les colonnes « Project_ID » et « Phase ».
-
--	On crée ensuite une clé primaire en fusionnant ces 2 colonnes en une colonne « Projet + Phase ID ».
-
-- Transformation du type de données : « Project_ID » en Nombre Entier, "Planned_Cost" en Nombre Décimal ainsi que "Projet Phase ID" et "Phase" en Texte. On transforme également "Start Date" en Date et "Planned_Duration" en Durée.
-
--	Suppression des lignes vides.
 
 ---
 
-## Création de la table `PROJETS GLOBAL COUTS`
+## ➕📋 Création de la table `PROJETS GLOBAL COUTS`
 
--	Je voulais que les directeurs aient accès aux KPIs de l’ensemble des projets et non au projet ou à la phase. J’ai donc décidé de créer cette nouvelle table dans laquelle l’ID Projet serait une clé primaire, sans les phases.
+Je voulais créer une page dans le rapport que les directeurs pourraient consulter pour avoir accès aux KPIs de l’ensemble des projets pour avoir une vision générale. Il n'y a donc pas de filtrage possible de l'ID Projet ou de la Phase. Les seules filtrages permis sont via le Type de projet (Marketing/IT) et la Localisation (Région + Pays).
 
--	J’ai donc utilisé les données déjà entrées dans la table ‘Actual_Costs’, notamment la colonne ID Projet et ai calculé la moyenne du taux de dépassement des coûts par projet.
+### 🛠️ Conception de la requête de création de table
 
--	Enfin j’ai créé une colonne conditionnelle qui attribue un statut en fonction du taux de dépassement : « OK » si en-dessous de 15% de dépassement et « Budget dépassé » au-delà.
+-	On crée donc une nouvelle table dans laquelle `Project_ID` serait une clé primaire, sans intégrer les phases qui créaient des doublons dans la colonne `Project_ID`.
+
+-	J’ai utilisé les données de la table `Actual_Costs`, notamment la colonne `Project_ID` et ai calculé la moyenne du taux de dépassement des coûts par projet.
+
+```dax
+PROJETS GLOBAL COUTS = SELECTCOLUMNS(
+                           // Table source créée par SUMMARIZE
+                           SUMMARIZE(
+                               'Actual_Costs',                                                                  // Table à utiliser
+                               'Actual_Costs'[Project_ID],                                                      // Colonne à grouper
+                               "Moyenne_Taux_Depassement", AVERAGE( 'Actual_Costs'[Taux de dépassement coûts] ) // Calcul de la moyenne
+                                    ),
+
+                           // Colonnes à garder dans le résultat final
+                               "ID_PROJET", 'Actual_Costs'[Project_ID],               // Identifiant du projet
+                               "Moyenne_Taux_Depassement", [Moyenne_Taux_Depassement] // Moyenne calculée
+                                    )
+```
+---
+
+### ✏️ Colonne calculée
+
+<details>
+<summary>🚦 Attribution du statut (OK / Budget dépassé) </summary>
+  
+```dax
+Statut coûts par projet = IF('PROJETS GLOBAL COUTS'[Moyenne_Taux_Depassement] >= 0.15, "Budget dépassé","OK")
+```
+</details> 
+
+---
+
+### 🧩 Liaison au modèle 
+
+- 🔗 **Relation** : liaison `PROJETS GLOBAL COUTS` ↔ `Projects_plans` via la clé `Project_ID`.
+
+---
 
 ## Création de la table `PROJETS GLOBAL DUREE`
 
