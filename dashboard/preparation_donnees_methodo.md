@@ -487,6 +487,12 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 ---
 
-# Schéma en étoile final
+## 👤 Attribution des rôles utilisateurs (RLS)
 
-![Schéma des données](../images/architecture_données.jpg)
+- 
+
+---
+
+## Schéma en étoile final
+
+![Schéma des données](../images/0_architecture_données.jpg)
