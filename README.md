@@ -55,7 +55,7 @@ Un écart de plus de **15 %** entre le prévisionnel et le réalisé déclenche 
 ---
 
 ## 🖼️ Aperçu du dashboard
-
+![Schéma des données](images/0_architecture_donnees.png)
 ![Page d'accueil](../images/1_page_accueil_tableau_de_bord.png)
 ![Indicateurs Globaux](../images/2_indicateurs_performances_globales.png)
 ![Indicateurs Ciblés](../images/3_suivi_depassements_projets.png)
