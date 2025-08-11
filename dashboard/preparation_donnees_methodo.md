@@ -1,6 +1,9 @@
 # 🧭 Méthodologie de préparation des données – Power Query & DAX
 
+---
+
 ## 📂 Table `Projects_plans`
+
 
 ### 🛠️ Préparation dans Power Query
 
@@ -25,6 +28,7 @@
    - Duplication des colonnes `Project_ID` et `Phase`.
   
    - Fusion pour créer `Projet + Phase ID` au format Texte.
+
 
 ### 🧩 Liaison au modèle 
 
@@ -54,7 +58,6 @@
   
    - Fusion pour créer `Projet + Phase ID` au format Texte
 
----
 
 ### ✏️ Colonnes calculées
 
@@ -82,7 +85,6 @@ Statut durée par phase = IF(Actual_Duration[Taux de dépassement durée] >= 0.1
 ```
 </details>
 
----
 
 ### 🧮 Mesures pour les visualisations
 
@@ -120,14 +122,12 @@ Alerte_Depassement_Durée = VAR DureePrevue = [Durée Prévue]
 ```
 </details>
 
----
 
 ### 🧩 Liaison au modèle 
 
 
 - 🔗 **Relation** : liaison des tables `Actual_Duration` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
----
 
 ### 🎯 Utilité dans le dashboard
 
@@ -144,6 +144,7 @@ Ces colonnes et mesures permettent :
 ---
 
 ## 📂 Table `Actual_Costs`
+
 
 ### 🛠️ Préparation dans Power Query & relations
 
@@ -165,7 +166,6 @@ Ces colonnes et mesures permettent :
   
    - Fusion pour créer `Projet + Phase ID` au format Texte
 
----
 
 ### ✏️ Colonnes calculées
 
@@ -193,7 +193,6 @@ Statut coûts par phase = IF('Actual_Costs'[Taux de dépassement coûts] >= 0.15
 ```
 </details>
 
----
 
 ### 🧮 Mesures pour les visualisations
 
@@ -231,13 +230,11 @@ Alerte_Depassement_coûts = VAR BudgetPrevu = [Budget Prévu]
 ```
 </details>
 
----
 
 ### 🧩 Liaison au modèle 
 
 - 🔗 **Relation** : liaison des tables `Actual_Costs` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
----
 
 ### 🎯 Utilité dans le dashboard
 
@@ -254,6 +251,7 @@ Ces colonnes et mesures permettent :
 ---
 
 ## 📂 Table `Deliverables_status`
+
 
 ### 🛠️ Préparation dans Power Query & relations
 
@@ -275,7 +273,6 @@ Ces colonnes et mesures permettent :
   
    - Fusion pour créer `Projet + Phase ID` au format Texte
 
----
 
 ### ✏️ Colonnes calculées
 
@@ -287,7 +284,6 @@ Statut Ecart Livrables = IF('Deliverables_status'[Var_Deliverables] <= -0.15, "P
 ```
 </details>
 
----
 
 ### 🧮 Mesures pour les visualisations
 
@@ -299,13 +295,11 @@ Alerte_Ecart_Livrables = IF(AVERAGE(Deliverables_status[Var_Deliverables]) <= -0
 ```
 </details>
 
----
 
 ### 🧩 Liaison au modèle 
 
 - 🔗 **Relation** : liaison `Deliverables_status` ↔ `Projects_plans` via la clé `Projet + Phase ID`.
 
----
 
 ### 🎯 Utilité dans le dashboard
 
@@ -323,6 +317,7 @@ Ces colonnes et mesures permettent :
 
 ## 📂 Table `Country_Profiles`
 
+
 ### 🛠️ Préparation dans Power Query & relations
 
 - 📌 **Promotion d’en-tête** → première ligne en en-tête.
@@ -337,7 +332,6 @@ Ces colonnes et mesures permettent :
 
   - `Type` → Texte
 
----
 
 ### 🧩 Liaison au modèle 
 
@@ -346,6 +340,7 @@ Ces colonnes et mesures permettent :
 ---
 
 ## 📂 Table `Projects_Locations`
+
 
 ### 🛠️ Préparation dans Power Query & relations
 
@@ -369,7 +364,6 @@ Ces colonnes et mesures permettent :
  
   - `Type` → Texte
 
----
 
 ### 🧩 Liaison au modèle 
 
@@ -378,6 +372,7 @@ Ces colonnes et mesures permettent :
 ---	
 
 ## 📂 Table `Project type`
+
 
 ### 🛠️ Préparation dans Power Query & relations
 
@@ -391,7 +386,6 @@ Ces colonnes et mesures permettent :
 
   - `Project Type` → Texte
 
----
 
 ### 🧩 Liaison au modèle 
 
@@ -402,6 +396,7 @@ Ces colonnes et mesures permettent :
 ## ➕📂 Création de la table `PROJETS GLOBAL COUTS`
 
 Je voulais créer une page dans le rapport que les directeurs pourraient consulter pour avoir accès aux KPIs de l’ensemble des projets pour avoir une vision générale. Il n'y a donc pas de filtrage possible de l'ID Projet ou de la Phase. Les seules filtrages permis sont via le Type de projet (Marketing/IT) et la Localisation (Région + Pays).
+
 
 ### 🛠️ Conception de la requête de création de table
 
@@ -423,7 +418,6 @@ PROJETS GLOBAL COUTS = SELECTCOLUMNS(
                                "Moyenne_Taux_Depassement", [Moyenne_Taux_Depassement] // Moyenne calculée
                                     )
 ```
----
 
 ### ✏️ Colonne calculée
 
@@ -435,7 +429,6 @@ Statut coûts par projet = IF('PROJETS GLOBAL COUTS'[Moyenne_Taux_Depassement] >
 ```
 </details> 
 
----
 
 ### 🧩 Liaison au modèle 
 
@@ -446,6 +439,7 @@ Statut coûts par projet = IF('PROJETS GLOBAL COUTS'[Moyenne_Taux_Depassement] >
 ## ➕📂 Création de la table `PROJETS GLOBAL DUREE`
 
 Je voulais créer une page dans le rapport que les directeurs pourraient consulter pour avoir accès aux KPIs de l’ensemble des projets pour avoir une vision générale. Il n'y a donc pas de filtrage possible de l'ID Projet ou de la Phase. Les seules filtrages permis sont via le Type de projet (Marketing/IT) et la Localisation (Région + Pays).
+
 
 ### 🛠️ Conception de la requête de création de table
 
@@ -465,7 +459,6 @@ PROJETS GLOBAL DUREE = SELECTCOLUMNS(
                               "Moyenne_Taux_Depassement", [Moyenne_Taux_Depassement_Retard]  // Sélection de la colonne de moyenne
                                     )
 ```
----
 
 ### ✏️ Colonne calculée
 
@@ -477,7 +470,6 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 ```
 </details> 
 
----
 
 ### 🧩 Liaison au modèle 
 
@@ -489,7 +481,6 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique qui leur a été attribué dans la section "Gestion des rôles" de Power BI. Cela permet de filtrer les tables (par exemple les limiter à une zone spécifique) pour que l'accès aux données se fasse en fonction de la position de l'utilisateur dans l'entreprise :
 
----
 
 ### 1️⃣ Le Directeur Général
 
@@ -498,7 +489,6 @@ Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit av
 - Il doit pouvoir suivre la performance globale de tous les projets.
 - Il doit également pouvoir assurer un suivi des KPIs des projets de manière indépendante et ciblée.
 
----
 
 ### 2️⃣ Les Directeurs de Région
 
@@ -507,7 +497,6 @@ Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit av
 - Ils doivent pouvoir suivre l’avancée des projets au niveau régional grâce aux KPIs du tableau de bord.
 - Ils doivent surveiller l’avancée de projet au niveau national pour donner des instructions aux Directeurs Nationaux dont ils ont la charge.
 
----
 
 ### 3️⃣ Les Directeurs de Pays
 
