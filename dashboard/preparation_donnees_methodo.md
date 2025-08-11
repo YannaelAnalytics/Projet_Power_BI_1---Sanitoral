@@ -491,6 +491,8 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique qui leur a été attribué dans la section "Gestion des rôles" de Power BI. Cela permet de filtrer les tables (par exemple les limiter à une zone spécifique) pour que l'accès aux données se fasse en fonction de la position de l'utilisateur dans l'entreprise :
 
+---
+
 ### 1️⃣ Le Directeur Général
 
 - Ce profil doit être omniscient.
@@ -498,13 +500,17 @@ Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit av
 - Il doit pouvoir suivre la performance globale de tous les projets.
 - Il doit également pouvoir assurer un suivi des KPIs des projets de manière indépendante et ciblée.
 
+---
+
 ### 2️⃣ Les Directeurs de Région
 
 - Ces profils n'ont accès qu'aux projets situés dans la région qui leur a été attribuée.
 - Ils ont besoin d’être alerté sur les dépassements des projets de leur région pour en référer au directeur général en cas d’écart.
 - Ils doivent pouvoir suivre l’avancée des projets au niveau régional grâce aux KPIs du tableau de bord.
 - Ils doivent surveiller l’avancée de projet au niveau national pour donner des instructions aux Directeurs Nationaux dont ils ont la charge.
-   
+
+---
+
 ### 3️⃣ Les Directeurs de Pays
 
 - Ces profils n'ont accès qu'aux projets situés dans le pays qui leur a été attribué.
