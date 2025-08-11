@@ -489,10 +489,28 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 ## 👤 Attribution des rôles utilisateurs (RLS)
 
-- Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique :
-    - le directeur général : A besoin d’être alerté lors d’écarts de performance des projets pour décider de les arrêter ou non. A besoin de suivre la performance globale de tous les projets pour suivre les avancements. Doit pouvoir suivre les projets de manière indépendante et avec des visuels d’influenceurs clés.
-    - les directeurs région : A besoin d’être alerté sur les dépassements des projets de leur région pour en référer au directeur général en cas d’écart. A besoin de suivre l’avancée des projets au niveau régional grâce aux indicateurs clés. Doit pouvoir surveiller l’avancée de projet au niveau national pour donner des instructions aux directeurs nationaux dont ils ont la charge.
-    - les directeurs pays : A besoin d’avoir une vision à l’échelle de leur pays sur les indicateurs des projets à l’échelle nationale. Doit pouvoir s’appuyer sur les alertes des directeurs région pour pouvoir prendre des mesures correctives. Doit pouvoir suivre les projets de manière indépendante à leur échelle et être alerté des écarts importants.
+- Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique qui leur a été attribué dans la section "Gestion des rôles" de Power BI. Cela permet de filtrer les tables (par exemple les limiter à une zone spécifique) pour que l'accès aux données se fasse en fonction de la position de l'utilisateur dans l'entreprise :
+
+### 1️⃣ Le Directeur Général
+
+- Ce profil doit être omniscient.
+- Il a besoin d’être alerté lors d’écarts de performance des projets trop importants (>15%) pour décider de les arrêter ou non.
+- Il doit pouvoir suivre la performance globale de tous les projets.
+- Il doit également pouvoir assurer un suivi des KPIs des projets de manière indépendante et ciblée.
+
+### 2️⃣ Les Directeurs de Région
+
+- Ces profils n'ont accès qu'aux projets situés dans la région qui leur a été attribuée.
+- Ils ont besoin d’être alerté sur les dépassements des projets de leur région pour en référer au directeur général en cas d’écart.
+- Ils doivent pouvoir suivre l’avancée des projets au niveau régional grâce aux KPIs du tableau de bord.
+- Ils doivent surveiller l’avancée de projet au niveau national pour donner des instructions aux Directeurs Nationaux dont ils ont la charge.
+   
+### 3️⃣ Les Directeurs de Pays
+
+- Ces profils n'ont accès qu'aux projets situés dans le pays qui leur a été attribué.
+- Ils ont besoin d’avoir une vision sur les KPIs des projets à l’échelle nationale.
+- Ils doivent pouvoir s’appuyer sur les alertes des Directeurs de Région pour pouvoir prendre des mesures correctives.
+- Ils doivent pouvoir suivre les projets de manière indépendante à leur échelle et être alerté des écarts importants pour pouvoir prendre des mesures ou en référer à leur supérieur.
 
 ---
 
