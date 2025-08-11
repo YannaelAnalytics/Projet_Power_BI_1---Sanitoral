@@ -56,6 +56,6 @@ Un écart de plus de **15 %** entre le prévisionnel et le réalisé déclenche 
 
 ## 🖼️ Aperçu du dashboard
 
-*(Ajoute ici une capture d’écran du rapport Power BI ou un lien vers une vidéo si hébergé)*
+
 
 ---
