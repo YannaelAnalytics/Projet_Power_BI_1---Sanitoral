@@ -489,7 +489,10 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 ## 👤 Attribution des rôles utilisateurs (RLS)
 
-- 
+- Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique :
+    - le directeur général : A besoin d’être alerté lors d’écarts de performance des projets pour décider de les arrêter ou non. A besoin de suivre la performance globale de tous les projets pour suivre les avancements. Doit pouvoir suivre les projets de manière indépendante et avec des visuels d’influenceurs clés.
+    - les directeurs région : A besoin d’être alerté sur les dépassements des projets de leur région pour en référer au directeur général en cas d’écart. A besoin de suivre l’avancée des projets au niveau régional grâce aux indicateurs clés. Doit pouvoir surveiller l’avancée de projet au niveau national pour donner des instructions aux directeurs nationaux dont ils ont la charge.
+    - les directeurs pays : A besoin d’avoir une vision à l’échelle de leur pays sur les indicateurs des projets à l’échelle nationale. Doit pouvoir s’appuyer sur les alertes des directeurs région pour pouvoir prendre des mesures correctives. Doit pouvoir suivre les projets de manière indépendante à leur échelle et être alerté des écarts importants.
 
 ---
 
