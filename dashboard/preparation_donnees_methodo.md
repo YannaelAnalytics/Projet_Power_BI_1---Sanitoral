@@ -489,7 +489,7 @@ Statut durée par phase = IF('PROJETS GLOBAL DUREE'[Moyenne_Taux_Depassement]*10
 
 ## 👤 Attribution des rôles utilisateurs (RLS)
 
-- Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique qui leur a été attribué dans la section "Gestion des rôles" de Power BI. Cela permet de filtrer les tables (par exemple les limiter à une zone spécifique) pour que l'accès aux données se fasse en fonction de la position de l'utilisateur dans l'entreprise :
+Le tableau de bord sera utilisé par les 3 types de directeurs et chacun doit avoir un accès spécifique qui leur a été attribué dans la section "Gestion des rôles" de Power BI. Cela permet de filtrer les tables (par exemple les limiter à une zone spécifique) pour que l'accès aux données se fasse en fonction de la position de l'utilisateur dans l'entreprise :
 
 ### 1️⃣ Le Directeur Général
 
