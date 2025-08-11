@@ -64,5 +64,5 @@
 
 ## Architecture des données 
 
-![Schéma des données](../images/0_architecture_données.jpg)
+![Schéma des données](../images/0_architecture_donnees.png)
 
